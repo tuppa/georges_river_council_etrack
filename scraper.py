@@ -48,14 +48,10 @@ with sqlite:
     for entry in results("tr"):
         council_reference = entry.find(class_="col2").div.text
         address = ", ".join(
-            [
-                s.strip()
-                for s in entry.find(class_="col3").text.strip().split("\n")
-                if s != ""
-            ][:-1]
+            s.get_text().strip() for s in entry.find(class_="col3").find_all("strong")
         )
         info_url = baseurl + entry.a.get("href").replace("../../", "")
-        description = entry.find(class_="col3").text.split("\n").pop()
+        description = list(entry.find(class_="col3")).pop()
         date_scraped = datetime.date.today().strftime("%Y-%m-%d")
 
         cursor.execute(
