@@ -1,6 +1,3 @@
-# This is a template for a Python scraper on morph.io (https://morph.io)
-# including some code snippets below that you should find helpful
-
 import datetime
 import sqlite3
 from bs4 import BeautifulSoup
@@ -23,7 +20,7 @@ table_filename = table_name + ".sqlite"
 soup = BeautifulSoup(get(scrape_url).text, "html.parser")
 results = soup.find(id="hiddenresult")
 
-# Write out to the sqlite database using scraperwiki library
+# Connect to SQlite DB
 sqlite = sqlite3.connect("data.sqlite")
 cursor = sqlite.cursor()
 with sqlite:
