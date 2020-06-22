@@ -30,9 +30,6 @@ with sqlite:
 
     # Scrape the application list
     for entry in results('tr'):
-        print("---")
-        print(entry)
-        print("---")
         council_reference = entry.find(class_="col2").div.text
         address = entry.find(class_="col3").text.strip()
         info_url = entry.a.get('href')
