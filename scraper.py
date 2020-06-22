@@ -7,11 +7,12 @@ from requests import get
 import sqlite3
 
 # Georges River Council eTrack applications submitted this month
-url = "https://etrack.georgesriver.nsw.gov.au/Pages/XC.Track/SearchApplication.aspx?d=thismonth&k=LodgementDate&"
+baseurl = "https://etrack.georgesriver.nsw.gov.au/"
+scrape_url = baseurl + "Pages/XC.Track/SearchApplication.aspx?d=thismonth&k=LodgementDate&"
 
 #
 # Read in the page and parse it with BS4
-soup = BeautifulSoup(get(url).text, 'html.parser')
+soup = BeautifulSoup(get(scrape_url).text, 'html.parser')
 results = soup.find(id="hiddenresult")
 
 # Write out to the sqlite database using scraperwiki library
@@ -32,7 +33,7 @@ with sqlite:
     for entry in results('tr'):
         council_reference = entry.find(class_="col2").div.text
         address = entry.find(class_="col3").text.strip()
-        info_url = entry.a.get('href')
+        info_url = baseurl + entry.a.get('href')
         description = entry.find(class_="col3").text.split('\n').pop()
         date_scraped = datetime.date.today().strftime("%Y-%m-%d")
 
