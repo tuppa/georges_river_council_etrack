@@ -33,8 +33,8 @@ with sqlite:
 
     if cursor.fetchone()[0] != 1:
         cursor.execute(
-            """
-            create table data (
+            f"""
+            create table {table_name} (
                 council_reference varchar unique,
                 address text,
                 description text,
@@ -70,5 +70,5 @@ with sqlite:
                 "{info_url}",
                 "{date_scraped}"
             )
-        """
+            """
         )
